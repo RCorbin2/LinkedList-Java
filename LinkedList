@@ -1,0 +1,236 @@
+class LinkedList {
+
+	Node first, last = null;
+	int count = 0;
+	
+		public static class Node{
+			int data;
+			Node next;
+			
+			Node(int num){
+				this.data = num;
+				next = null;
+			}
+		}
+		
+		public void insertFront(int n){
+
+			Node node = new Node(n);
+			Node current;
+			
+			if(first == null){
+				first = node;
+				last = first;
+				count++;
+			}
+			else{
+				current = first;
+				first = node;
+				first.next = current;
+				count++;
+			}
+		}
+		
+		public void insertAtPosition(int n, int x){
+			Node node = new Node(n);
+			Node previous = first;
+			int position = x;
+			
+			if(first == null){
+				System.out.println("List is Empty can not insert");
+			}
+			
+		
+			else if (position < 1 || position >= count){
+				System.out.println("List entry is out of bounds can not insert at postion " + position);
+			}
+			
+			else if (position == 1){
+				insertFront(n);
+			}
+			
+			else if (position == count){
+				insertBack(n);
+			}
+			
+			else{	
+				for(int i = 0; i < position; i++){
+					previous = previous.next;
+					i++;
+				}
+					
+				node.next = previous.next;
+				previous.next = node;
+				count++;
+					
+			}
+		}
+		
+		public void insertBack(int n){
+			Node node = new Node(n);
+			Node currentLast;
+			
+			if(first == null){
+				first = node;
+				first.next = last;
+				count++;
+			}
+			
+			else{
+				currentLast = last;
+				last = node;
+				currentLast.next = last;
+				count++;
+			}
+		}
+		
+		public void deleteNodeData(int x){
+			Node list = first;
+			Node previous = null;
+			int input = x;
+			
+			while(list.data != input && list.next != null){
+				previous = list;
+				list = list.next;
+			}
+			
+			if(list.next == null){
+				System.out.println("Data Entry not Found");
+			}
+			
+			else if(list.data == input){
+				first = list.next;
+				count--;
+			}
+			
+			else{
+				previous.next = list.next;
+				count--;
+			}
+		}
+		
+		public void deleteNodePosition(int x){
+			Node list = first;
+			Node previous = null;
+			int position = x;
+			
+			if(position < 1 || position > count){
+				System.out.println("Entered Delete Position out of Range");
+			}
+			
+			else if (position == 1){
+				first = list.next;
+				count--;
+			}
+			
+			else if (position > 1){
+				for(int i = 1; i < position; i++)
+				{
+					previous = list;
+					list = list.next;
+				}
+				
+				previous.next = list.next;
+				count--;
+			}
+		}
+		
+		public boolean searchData(int x){
+			Node node = first;
+			int input = x;
+			int position = 1;
+			boolean found;
+			
+			while(node.data != input && node.next != null){
+				node = node.next;
+				position++;
+			}
+			
+			if (node.data == input){
+				found = true;
+				System.out.println("Data found: " + found + " at Link: " + position);
+				return found;
+			}
+			
+			else{
+				found = false;
+				System.out.println("Data found: " + found);
+				return found;
+			}
+		}
+		
+		public int getIndexData(int x){
+			Node node = first;
+			int input = x;
+			int i = 0;
+			
+			while(node.next != null && input > i){
+				node = node.next;
+				i++;
+			}
+			
+			
+			if (input < count){
+				return node.data;
+			}
+			
+			else{
+				return -1;
+			}
+		}
+		
+		public int getNodeNthFromEnd(int x){
+			Node node = first;
+			int distance = count - x;
+			
+			for(int i = 0; i < distance; i++){
+				node = node.next;
+			}
+			
+			if(distance >= 0 && distance < count){
+				return node.data;
+			}
+			
+			else{
+				return -1;
+			}
+		}
+		
+		public int getMidList(){
+			Node node = first;
+			int i = 1;
+			
+			while(i < count/2 && node != null){
+				node = node.next;
+				i++;
+			}
+			
+			if(node == null){
+				return -1;
+			}
+			
+			else{
+				return node.next.data;
+			}
+			
+		}
+		
+		public void deleteList(){
+			first = null;
+			count = 0;
+		}
+		
+		public void display(){
+			Node list = first;
+
+			while(list != null){
+				System.out.println(list.data + " ");
+				list = list.next;
+
+			}
+			
+			System.out.println("Length of list: " + count);
+		}
+		
+		
+}
